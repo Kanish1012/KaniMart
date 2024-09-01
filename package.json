@@ -1,16 +1,21 @@
 {
-  "name": "kanimart",
-  "version": "1.0.0",
-  "description": "e-commerce website using MERN",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Kanish V",
-  "license": "ISC",
-  "dependencies": {
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "mongoose": "^8.6.0"
-  }
-}
+    "name": "kanimart",
+    "version": "1.0.0",
+    "description": "e-commerce website using MERN",
+    "main": "server.js",
+    "scripts": {
+        "start": "nodemon backend/server.js",
+        "dev": "set NODE_ENV=development && nodemon backend/server.js",
+        "prod": "set NODE_ENV=production && nodemon backend/server.js"
+    },
+    "author": "Kanish V",
+    "license": "ISC",
+    "dependencies": {
+        "dotenv": "^16.4.5",
+        "express": "^4.19.2",
+        "mongoose": "^8.6.0"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.4"
+    }
+} 
