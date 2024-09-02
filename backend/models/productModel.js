@@ -21,7 +21,7 @@ const productSchema = new mongoose.Schema({
     },
     images: [
         {
-            imgae: {
+            image: {
                 type: String,
                 required: true,
             },
@@ -54,7 +54,7 @@ const productSchema = new mongoose.Schema({
     stock: {
         type: Number,
         required: [true, "Please enter product stock"],
-        maxLenght: [100, "Product stock cannot exceed 100"],
+        maxLength: [100, "Product stock cannot exceed 100"],
     },
     numberOfReviews: {
         type: Number,
