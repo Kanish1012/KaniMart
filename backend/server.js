@@ -7,8 +7,16 @@ dotenv.config({ path: path.join(__dirname, "./config/config.env") });
 
 connectDatabase();
 
-app.listen(process.env.PORT, () => {
+const server = app.listen(process.env.PORT, () => {
     console.log(
         `Server is listening to the port ${process.env.PORT} in ${process.env.NODE_ENV}`
     );
+});
+
+process.on("unhandledRejection", (err) => {
+    console.log(`Error: ${err.message}`);
+    console.log("Shutting down the server due to unhandled rejection error");
+    server.close(() => {
+        process.exit(1);
+    });
 });
