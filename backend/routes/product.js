@@ -3,7 +3,7 @@ const {
     getProducts,
     newProduct,
     getSingleProduct,
-    updataProduct,
+    updateProduct,
     deleteProduct,
 } = require("../controllers/productController");
 const router = express.Router();
@@ -13,7 +13,7 @@ router.route("/products").get(getProducts);
 router
     .route("/product/:id")
     .get(getSingleProduct)
-    .put(updataProduct)
+    .put(updateProduct)
     .delete(deleteProduct);
 
 module.exports = router;

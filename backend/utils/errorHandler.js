@@ -5,3 +5,5 @@ class ErrorHandler extends Error {
         Error.captureStackTrace(this, this.constructor);
     }
 }
+
+module.exports = ErrorHandler;
