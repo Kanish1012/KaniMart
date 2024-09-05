@@ -4,6 +4,7 @@ class APIFeatures {
         this.queryStr = queryStr;
     }
 
+    //search function
     search() {
         let keyword = this.queryStr.keyword
             ? {
@@ -19,6 +20,7 @@ class APIFeatures {
         return this;
     }
 
+    //filter function
     filter() {
         const queryStrCopy = { ...this.queryStr };
 
@@ -26,14 +28,14 @@ class APIFeatures {
         const removeFields = ["keyword", "limit", "page"];
         removeFields.forEach((field) => queryStrCopy[field]);
 
-        if (queryStrCopy.category) {
-            queryStrCopy.category = {
-                $regex: queryStrCopy.category,
-                $options: "i",
-            };
-        }
+        //Add $ before lt, lte, gt, gte
+        let queryStr = JSON.stringify(queryStrCopy);
+        queryStr = queryStr.replace(
+            /\b(gt|gte|lt|lte)/g,
+            (match) => `$${match}`
+        );
 
-        this.query.find(queryStrCopy);
+        this.query.find(JSON.parse(queryStr));
         return this;
     }
 }
