@@ -5,6 +5,7 @@ const {
     myOrders,
     orders,
     updateOrder,
+    deleteOrder,
 } = require("../controllers/orderController");
 const router = express.Router();
 const {
@@ -22,6 +23,7 @@ router
     .get(isAuthenticatedUser, authorizeRoles("admin"), orders);
 router
     .route("/order/:id")
-    .put(isAuthenticatedUser, authorizeRoles("admin"), updateOrder);
+    .put(isAuthenticatedUser, authorizeRoles("admin"), updateOrder)
+    .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteOrder);
 
 module.exports = router;
