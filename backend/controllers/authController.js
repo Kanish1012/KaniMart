@@ -3,6 +3,7 @@ const User = require("../models/userModel");
 const ErrorHandler = require("../utils/errorHandler");
 const sendToken = require("../utils/jwt");
 
+//Register User
 exports.registerUser = catchAsyncError(async (req, res, next) => {
     const { name, email, password, avatar } = req.body;
     const user = await User.create({
@@ -15,6 +16,7 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
     sendToken(user, 201, res);
 });
 
+//Login User
 exports.loginUser = catchAsyncError(async (req, res, next) => {
     const { email, password } = req.body;
     if (!email) {
@@ -37,3 +39,16 @@ exports.loginUser = catchAsyncError(async (req, res, next) => {
 
     sendToken(user, 201, res);
 });
+
+//Logout User
+exports.logoutUser = (req, res, next) => {
+    res.cookie("token", null, {
+        expires: new Date(Date.now()),
+        httpOnly: true,
+    })
+        .status(200)
+        .json({
+            success: true,
+            message: "Logged out successfully",
+        });
+};
