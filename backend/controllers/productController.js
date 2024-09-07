@@ -3,7 +3,7 @@ const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncError");
 const APIFeatures = require("../utils/apiFeatures");
 
-//Create Product - /api/v1/products/new
+//Create Product - /api/v1/admin/products/new
 exports.newProduct = catchAsyncErrors(async (req, res, next) => {
     //Adding user id
     req.body.user = req.user.id;
