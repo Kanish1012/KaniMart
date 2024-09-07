@@ -44,8 +44,14 @@ const userSchema = new mongoose.Schema({
 
 //Hashing password
 userSchema.pre("save", async function (next) {
+    // If password field is not modified, skip hashing
+    if (!this.isModified("password")) {
+        return next();
+    }
     this.password = await bcrypt.hash(this.password, 10);
+    next();
 });
+
 
 //JWT token generation
 userSchema.methods.getJwtToken = function () {
@@ -59,11 +65,8 @@ userSchema.methods.isValidPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 };
 
-let model = mongoose.model("User", userSchema);
-module.exports = model;
-
-//Reset password
-userSchema.methods.resetPassword = function () {
+//Reset token
+userSchema.methods.getResetToken = function () {
     //Generate Token
     const token = crypto.randomBytes(20).toString("hex");
 
@@ -78,3 +81,6 @@ userSchema.methods.resetPassword = function () {
 
     return token;
 };
+
+let model = mongoose.model("User", userSchema);
+module.exports = model;
