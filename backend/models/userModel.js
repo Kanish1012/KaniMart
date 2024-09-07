@@ -46,12 +46,10 @@ const userSchema = new mongoose.Schema({
 userSchema.pre("save", async function (next) {
     // If password field is not modified, skip hashing
     if (!this.isModified("password")) {
-        return next();
+        next();
     }
     this.password = await bcrypt.hash(this.password, 10);
-    next();
 });
-
 
 //JWT token generation
 userSchema.methods.getJwtToken = function () {
