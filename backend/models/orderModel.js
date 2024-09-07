@@ -24,7 +24,7 @@ const orderSchema = mongoose.Schema({
         },
     },
     user: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.SchemaTypes.ObjectId,
         required: true,
         ref: "User",
     },
@@ -47,7 +47,7 @@ const orderSchema = mongoose.Schema({
                 required: true,
             },
             product: {
-                type: mongoose.Schema.Types.ObjectId,
+                type: mongoose.SchemaTypes.ObjectId,
                 required: true,
                 ref: "Product",
             },
@@ -73,6 +73,16 @@ const orderSchema = mongoose.Schema({
         required: true,
         default: 0.0,
     },
+    paymentInfo: {
+        id: {
+            type: String,
+            required: true,
+        },
+        status: {
+            type: String,
+            required: true,
+        },
+    },
     paidAt: {
         type: Date,
     },
@@ -82,6 +92,7 @@ const orderSchema = mongoose.Schema({
     orderStatus: {
         type: String,
         required: true,
+        default: "Processing",
     },
     createdAt: {
         type: Date,
@@ -90,4 +101,5 @@ const orderSchema = mongoose.Schema({
 });
 
 let orderModel = mongoose.model("Order", orderSchema);
+
 module.exports = orderModel;
