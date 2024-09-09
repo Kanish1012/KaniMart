@@ -22,9 +22,11 @@ export default function Home() {
                                     </a>
                                 </h5>
                                 <div className="ratings mt-auto">
-                                    <div className="rating-outer">
-                                        <div className="rating-inner"></div>
-                                    </div>
+                                    <i className="fa fa-star"></i>
+                                    <i className="fa fa-star"></i>
+                                    <i className="fa fa-star"></i>
+                                    <i className="fa fa-star-half-o"></i>
+                                    <i className="fa fa-star-o"></i>
                                     <span id="no_of_reviews">(5 Reviews)</span>
                                 </div>
                                 <p className="card-text">22500</p>
