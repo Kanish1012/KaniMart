@@ -20,7 +20,7 @@ export default function Home() {
             });
         }
         dispatch(getProducts);
-    }, [error]);
+    }, [error,]);
 
     return (
         <Fragment>
