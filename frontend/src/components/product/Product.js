@@ -7,6 +7,7 @@ export default function Product({ product }) {
                 <img
                     src={product.images[0].image}
                     className="card-img-top mx-auto"
+                    alt={product.name}
                 />
                 <div className="card-body d-flex flex-column">
                     <h5 className="card-title">

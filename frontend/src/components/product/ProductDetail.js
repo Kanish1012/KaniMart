@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Loader from "../layouts/Loader";
 import { Carousel } from "react-bootstrap";
+import MetaData from "../layouts/MetaData";
 
 export default function ProductDetail() {
     const { loading, product } = useSelector((state) => state.productState);
@@ -13,7 +14,7 @@ export default function ProductDetail() {
 
     useEffect(() => {
         dispatch(getProduct(id));
-    },[]);
+    }, [dispatch, id]);
 
     return (
         <Fragment>
@@ -21,6 +22,7 @@ export default function ProductDetail() {
                 <Loader />
             ) : (
                 <Fragment>
+                    <MetaData title={product.name} />
                     <div className="row f-flex justify-content-around">
                         <div
                             className="col-12 col-lg-5 img-fluid"
@@ -138,7 +140,9 @@ export default function ProductDetail() {
                                                     <h5
                                                         className="modal-title"
                                                         id=""
-                                                    ></h5>
+                                                    >
+                                                        Hi
+                                                    </h5>
                                                     <button className="close">
                                                         <span>&items;</span>
                                                     </button>
