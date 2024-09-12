@@ -18,16 +18,23 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 //Get Products - /api/v1/products
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
     const resPerPage = 3;
-    const apiFeatures = new APIFeatures(Product.find(), req.query)
-        .search()
-        .filter()
-        .paginate(resPerPage);
 
-    const products = await apiFeatures.query;
-    const totalProducts = await Product.countDocuments();
+    let buildQuery = () => {
+        return new APIFeatures(Product.find(), req.query).search().filter();
+    };
+
+    const filteredProductsCount = await buildQuery().query.countDocuments({});
+    const totalProductsCount = await Product.countDocuments();
+    let productsCount = totalProductsCount;
+
+    if (filteredProductsCount !== totalProductsCount) {
+        productsCount = filteredProductsCount;
+    }
+
+    const products = await buildQuery().paginate(resPerPage).query;
     res.status(200).json({
         success: true,
-        count: totalProducts,
+        count: productsCount,
         resPerPage,
         products,
     });
@@ -146,7 +153,7 @@ exports.getReviews = catchAsyncErrors(async (req, res, next) => {
 exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
     const product = await Product.findById(req.query.productId);
 
-    //Filtering the reviews which does not match the deletign review id
+    //Filtering the reviews which does not match the deleting review id
     const reviews = product.reviews.filter((review) => {
         return review._id.toString() !== req.query.id.toString();
     });
