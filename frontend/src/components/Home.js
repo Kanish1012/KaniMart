@@ -13,7 +13,7 @@ export default function Home() {
         (state) => state.productsState
     );
     const [currentPage, setCurrentPage] = useState(1);
-    console.log(currentPage);
+
     const setCurrentPageNo = (pageNo) => {
         setCurrentPage(pageNo);
     };
@@ -23,8 +23,8 @@ export default function Home() {
                 position: "bottom-center",
             });
         }
-        dispatch(getProducts);
-    }, [error, dispatch]);
+        dispatch(getProducts(currentPage));
+    }, [error, dispatch, currentPage]);
 
     return (
         <Fragment>
