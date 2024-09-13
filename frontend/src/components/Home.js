@@ -23,7 +23,7 @@ export default function Home() {
                 position: "bottom-center",
             });
         }
-        dispatch(getProducts(null, currentPage));
+        dispatch(getProducts(null, null, currentPage));
     }, [error, dispatch, currentPage]);
 
     return (
@@ -39,6 +39,7 @@ export default function Home() {
                             {products &&
                                 products.map((product) => (
                                     <Product
+                                        col={3}
                                         key={product._id}
                                         product={product}
                                     />
