@@ -21,11 +21,9 @@ exports.registerUser = catchAsyncError(async (req, res, next) => {
 //Login User - /api/v1/login
 exports.loginUser = catchAsyncError(async (req, res, next) => {
     const { email, password } = req.body;
-    if (!email) {
-        return next(new ErrorHandler("Please enter email", 400));
-    }
-    if (!password) {
-        return next(new ErrorHandler("Please enter password", 400));
+
+    if (!email || !password) {
+        return next(new ErrorHandler("Please enter email & password", 400));
     }
 
     //Finding the user database
