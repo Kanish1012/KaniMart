@@ -10,8 +10,14 @@ import ProductDetail from "./components/product/ProductDetail";
 import ProductSearch from "./components/product/ProductSearch";
 import Login from "./components/user/Login";
 import Register from "./components/user/Register";
+import { useEffect } from "react";
+import store from "./store";
+import { loadUser } from "./actions/userActions";
 
 function App() {
+    useEffect(() => {
+        store.dispatch(loadUser);
+    }, []);
     return (
         <Router>
             <div className="App">
