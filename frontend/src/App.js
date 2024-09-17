@@ -13,6 +13,7 @@ import Register from "./components/user/Register";
 import { useEffect } from "react";
 import store from "./store";
 import { loadUser } from "./actions/userActions";
+import Profile from "./components/user/Profile";
 
 function App() {
     useEffect(() => {
@@ -37,6 +38,8 @@ function App() {
                             />
                             <Route path="/login" element={<Login />} />
                             <Route path="/register" element={<Register />} />
+                            <Route path="/myprofile" element={<Profile />} />
+
                         </Routes>
                     </div>
                     <Footer />
