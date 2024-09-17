@@ -1,13 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import Loader from "../layouts/Loader";
 
 export default function Profile() {
     const { user } = useSelector((state) => state.authState);
-
-    if (!user) {
-        return <Loader />;
-    }
 
     return (
         <div className="row justify-content-around mt-5 user-info">
