@@ -60,6 +60,7 @@ export default function UpdateProfile() {
                     dispatch(clearAuthError);
                 },
             });
+            return;
         }
     }, [user, isUpdated, error]);
 
