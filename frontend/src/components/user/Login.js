@@ -65,9 +65,9 @@ export default function Login() {
                             />
                         </div>
 
-                        <a href="#" className="float-right mb-4">
+                        <Link to="/password/forgot" className="float-right mb-4">
                             Forgot Password
-                        </a>
+                        </Link>
 
                         <button
                             className="btn btn-block py-3"
