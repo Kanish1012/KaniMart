@@ -60,7 +60,7 @@ export default function Register() {
                 },
             });
         }
-    }, [error, dispatch, isAuthenticated]);
+    }, [error, dispatch, isAuthenticated, navigate]);
 
     return (
         <Fragment>
@@ -113,7 +113,7 @@ export default function Register() {
                                     <figure className="avatar mr-3 item-rtl">
                                         <img
                                             src={avatarPreview}
-                                            alt="image"
+                                            alt="Avatar"
                                             className="rounded-circle"
                                         />
                                     </figure>

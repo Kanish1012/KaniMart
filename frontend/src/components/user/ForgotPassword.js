@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 export default function ForgotPassword() {
     const [email, setEmail] = useState("");
     const dispatch = useDispatch();
-    const { laoding, error, user, message } = useSelector(
+    const {  error, message } = useSelector(
         (state) => state.authState
     );
 

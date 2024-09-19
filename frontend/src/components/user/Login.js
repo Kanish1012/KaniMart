@@ -34,7 +34,7 @@ export default function Login() {
             });
             return;
         }
-    }, [isAuthenticated, error, dispatch]);
+    }, [isAuthenticated, error, dispatch, navigate]);
 
     return (
         <Fragment>
@@ -65,7 +65,10 @@ export default function Login() {
                             />
                         </div>
 
-                        <Link to="/password/forgot" className="float-right mb-4">
+                        <Link
+                            to="/password/forgot"
+                            className="float-right mb-4"
+                        >
                             Forgot Password?
                         </Link>
 
