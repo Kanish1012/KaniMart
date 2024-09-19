@@ -131,9 +131,10 @@ export const resetPassword = (formData, token) => async (dispatch) => {
                 "Content-Type": "application/json",
             },
         };
-        await axios.post(`/api/v1/password/reset/${token}`, formData, config);
-        dispatch(resetPasswordSuccess());
+        const { data } = await axios.post(`/api/v1/password/reset/${token}`, formData, config);
+        dispatch(resetPasswordSuccess(data));
     } catch (err) {
         dispatch(resetPasswordFail(err.response.data.message));
     }
 };
+
