@@ -11,6 +11,9 @@ import {
     loadUserFail,
     logoutSuccess,
     logoutFail,
+    updateProfileRequest,
+    updateProfileSuccess,
+    updateProfileFail,
 } from "../slices/authSlice";
 import axios from "axios";
 
@@ -59,5 +62,20 @@ export const logout = async (dispatch) => {
         dispatch(logoutSuccess());
     } catch (error) {
         dispatch(logoutFail);
+    }
+};
+
+export const updateProfile = (userData) => async (dispatch) => {
+    try {
+        dispatch(updateProfileRequest());
+        const config = {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        };
+        const { data } = await axios.post(`/api/v1/update`, userData, config);
+        dispatch(updateProfileSuccess(data));
+    } catch (err) {
+        dispatch(updateProfileFail(err.response.data.message));
     }
 };
