@@ -60,7 +60,7 @@ export default function Register() {
                 },
             });
         }
-    }, [error, dispatch]);
+    }, [error, dispatch, isAuthenticated]);
 
     return (
         <Fragment>
