@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
     const { user } = useSelector((state) => state.authState);
@@ -14,13 +15,13 @@ export default function Profile() {
                         className="rounded-circle img-fluid"
                     />
                 </figure>
-                <a
-                    href="#"
+                <Link
+                    to="/myprofile/update"
                     id="edit_profile"
                     className="btn btn-primary btn-block my-5"
                 >
-                    My Profile
-                </a>
+                    Edit Profile
+                </Link>
             </div>
             <div className="col-12 col-md-5">
                 <h4>Full Name</h4>
