@@ -73,8 +73,6 @@ export default function ProductSearch() {
                                         marks={{
                                             1000: "₹1000",
                                             150000: "₹150000",
-                                            1: "₹1",
-                                            1000: "₹1000",
                                         }}
                                         min={1000}
                                         max={150000}
