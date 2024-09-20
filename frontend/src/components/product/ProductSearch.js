@@ -71,8 +71,8 @@ export default function ProductSearch() {
                                     <Slider
                                         range={true}
                                         marks={{
-                                            1: "$1",
-                                            1000: "$1000",
+                                            1: "₹1",
+                                            1000: "₹1000",
                                         }}
                                         min={1}
                                         max={1000}
