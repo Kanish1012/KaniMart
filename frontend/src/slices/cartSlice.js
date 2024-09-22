@@ -34,11 +34,34 @@ const cartSlice = createSlice({
             }
             return state;
         },
+        increaseCartItemQty(state, action) {
+            state.items = state.items.map((item) => {
+                if (item.prodcut == action.payload) {
+                    item.quantity += 1;
+                }
+                return item;
+            });
+            localStorage.setItem("cartItems", JSON.stringify(state.items));
+        },
+        decreaseCartItemQty(state, action) {
+            state.items = state.items.map((item) => {
+                if (item.prodcut == action.payload) {
+                    item.quantity -= 1;
+                }
+                return item;
+            });
+            localStorage.setItem("cartItems", JSON.stringify(state.items));
+        },
     },
 });
 
 const { actions, reducer } = cartSlice;
 
-export const { addCartItemRequest, addCartItemSuccess } = actions;
+export const {
+    addCartItemRequest,
+    addCartItemSuccess,
+    increaseCartItemQty,
+    decreaseCartItemQty,
+} = actions;
 
 export default reducer;
