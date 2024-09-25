@@ -103,7 +103,7 @@ export default function ProductDetail() {
                                     readOnly
                                 />
                                 <span
-                                    className="btn btn-primary plus"
+                                    className="btn btn-success plus"
                                     onClick={increaseQuantity}
                                 >
                                     +
@@ -112,7 +112,7 @@ export default function ProductDetail() {
                             <button
                                 type="button"
                                 id="cart_btn"
-                                className="btn btn-primary d-inline ml-4"
+                                className="btn btn-success d-inline ml-4"
                                 onClick={() =>
                                     dispatch(addCartItem(product._id, quantity))
                                 }
@@ -152,7 +152,7 @@ export default function ProductDetail() {
                             <button
                                 id="review_btn"
                                 type="button"
-                                className="btn btn-primary mt-4"
+                                className="btn btn-success mt-4"
                             >
                                 Submit Your Review
                             </button>

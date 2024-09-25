@@ -84,7 +84,7 @@ export default function Cart() {
                                                         readOnly
                                                     />
                                                     <span
-                                                        className="btn btn-primary plus"
+                                                        className="btn btn-success plus"
                                                         onClick={() =>
                                                             increaseQty(item)
                                                         }
@@ -133,7 +133,7 @@ export default function Cart() {
                                 <hr />
                                 <button
                                     id="checkout_btn"
-                                    className="btn btn-primary btn-block"
+                                    className="btn btn-success btn-block"
                                 >
                                     Checkout
                                 </button>

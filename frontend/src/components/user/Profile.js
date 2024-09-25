@@ -18,7 +18,7 @@ export default function Profile() {
                 <Link
                     to="/myprofile/update"
                     id="edit_profile"
-                    className="btn btn-primary btn-block my-5"
+                    className="btn btn-success btn-block my-5"
                 >
                     Edit Profile
                 </Link>
@@ -36,7 +36,10 @@ export default function Profile() {
                 <a href="javascript;" className="btn btn-danger btn-block mt-5">
                     My Orders
                 </a>
-                <Link to="/myprofile/update/password" className="btn btn-primary btn-block mt-3">
+                <Link
+                    to="/myprofile/update/password"
+                    className="btn btn-success btn-block mt-3"
+                >
                     Change Password
                 </Link>
             </div>

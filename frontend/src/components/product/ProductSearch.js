@@ -18,7 +18,7 @@ export default function ProductSearch() {
         (state) => state.productsState
     );
     const [currentPage, setCurrentPage] = useState(1);
-    const [price, setPrice] = useState([1000, 150000]);
+    const [price, setPrice] = useState([100, 150000]);
     const [priceChanged, setPriceChanged] = useState(price);
     const [category, setCategory] = useState(null);
     const [rating, setRating] = useState(0);
@@ -71,10 +71,10 @@ export default function ProductSearch() {
                                     <Slider
                                         range={true}
                                         marks={{
-                                            1000: "₹1000",
+                                            100: "₹100",
                                             150000: "₹150000",
                                         }}
-                                        min={1000}
+                                        min={100}
                                         max={150000}
                                         defaultValue={price}
                                         onChange={(price) => {
