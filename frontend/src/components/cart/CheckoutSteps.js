@@ -24,7 +24,7 @@ export default function CheckoutSteps({ shipping, confirmOrder, payment }) {
                     <div className="triangle-active"></div>
                 </Link>
             ) : (
-                <Link to="/shipping">
+                <Link to="/order/confirm">
                     <div className="triangle2-incomplete"></div>
                     <div className="step incomplete">Confirm Order</div>
                     <div className="triangle-incomplete"></div>
@@ -38,7 +38,7 @@ export default function CheckoutSteps({ shipping, confirmOrder, payment }) {
                     <div className="triangle-active"></div>
                 </Link>
             ) : (
-                <Link to="/shipping">
+                <Link to="/payment">
                     <div className="triangle2-incomplete"></div>
                     <div className="step incomplete">Payment</div>
                     <div className="triangle-incomplete"></div>

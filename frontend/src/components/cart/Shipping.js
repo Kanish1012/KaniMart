@@ -4,6 +4,23 @@ import { countries } from "countries-list";
 import { saveShippingInfo } from "../../slices/cartSlice";
 import { useNavigate } from "react-router-dom";
 import CheckoutSteps from "./CheckoutSteps";
+import { toast } from "react-toastify";
+
+export const validateShipping = (shippingInfo, navigate) => {
+    if (
+        !shippingInfo.address ||
+        !shippingInfo.city ||
+        !shippingInfo.state ||
+        !shippingInfo.postalCode ||
+        !shippingInfo.phoneNo ||
+        !shippingInfo.country
+    ) {
+        toast.error("Please fill the shipping information", {
+            position: "bottom-center",
+        });
+        navigate("/shipping");
+    }
+};
 
 export default function Shipping() {
     const { shippingInfo } = useSelector((state) => state.cartState);
@@ -65,18 +82,6 @@ export default function Shipping() {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor="state_field">State</label>
-                            <input
-                                type="text"
-                                id="state_field"
-                                className="form-control"
-                                value={state}
-                                onChange={(e) => setState(e.target.value)}
-                                required
-                            />
-                        </div>
-
-                        <div className="form-group">
                             <label htmlFor="postal_code_field">
                                 Postal Code
                             </label>
@@ -86,6 +91,18 @@ export default function Shipping() {
                                 className="form-control"
                                 value={postalCode}
                                 onChange={(e) => setPostalCode(e.target.value)}
+                                required
+                            />
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor="state_field">State</label>
+                            <input
+                                type="text"
+                                id="state_field"
+                                className="form-control"
+                                value={state}
+                                onChange={(e) => setState(e.target.value)}
                                 required
                             />
                         </div>
