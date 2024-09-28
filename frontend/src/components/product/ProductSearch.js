@@ -18,7 +18,7 @@ export default function ProductSearch() {
         (state) => state.productsState
     );
     const [currentPage, setCurrentPage] = useState(1);
-    const [price, setPrice] = useState([100, 150000]);
+    const [price, setPrice] = useState([100, 1000]);
     const [priceChanged, setPriceChanged] = useState(price);
     const [category, setCategory] = useState(null);
     const [rating, setRating] = useState(0);
@@ -71,11 +71,11 @@ export default function ProductSearch() {
                                     <Slider
                                         range={true}
                                         marks={{
-                                            100: "₹100",
-                                            150000: "₹150000",
+                                            100: "$100",
+                                            1000: "$1000",
                                         }}
                                         min={100}
-                                        max={150000}
+                                        max={1000}
                                         defaultValue={price}
                                         onChange={(price) => {
                                             setPrice(price);
@@ -83,7 +83,7 @@ export default function ProductSearch() {
                                         handleRender={(renderProps) => {
                                             return (
                                                 <Toolip
-                                                    overlay={`₹${renderProps.props["aria-valuenow"]}`}
+                                                    overlay={`$${renderProps.props["aria-valuenow"]}`}
                                                 >
                                                     <div
                                                         {...renderProps.props}

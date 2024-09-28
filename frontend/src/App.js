@@ -35,6 +35,7 @@ function App() {
             const { data } = await axios.get("/api/v1/stripeapi");
             setStripeApiKey(data.stripeApiKey);
         }
+        getStripeApiKey();
     }, []);
     return (
         <Router>
@@ -104,18 +105,22 @@ function App() {
                                     </ProtectedRoute>
                                 }
                             />
-                            <Route
-                                path="/payment"
-                                element={
-                                    <ProtectedRoute>
-                                        <Elements
-                                            stripe={loadStripe(stripeApiKey)}
-                                        >
-                                            <Payment />
-                                        </Elements>
-                                    </ProtectedRoute>
-                                }
-                            />
+                            {stripeApiKey && (
+                                <Route
+                                    path="/payment"
+                                    element={
+                                        <ProtectedRoute>
+                                            <Elements
+                                                stripe={loadStripe(
+                                                    stripeApiKey
+                                                )}
+                                            >
+                                                <Payment />
+                                            </Elements>
+                                        </ProtectedRoute>
+                                    }
+                                />
+                            )}
                         </Routes>
                     </div>
                     <Footer />

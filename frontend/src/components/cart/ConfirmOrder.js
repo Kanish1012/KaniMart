@@ -28,7 +28,7 @@ export default function ConfirmOrder() {
             taxPrice,
             totalPrice,
         };
-        sessionStorage.setItem("orderInfor", JSON.stringify(data));
+        sessionStorage.setItem("orderInfo", JSON.stringify(data));
         navigate("/payment");
     };
 
@@ -82,8 +82,8 @@ export default function ConfirmOrder() {
 
                                     <div className="col-4 col-lg-4 mt-4 mt-lg-0">
                                         <p>
-                                            {item.quantity} x ₹{item.price} ={" "}
-                                            <b>₹{item.quantity * item.price}</b>
+                                            {item.quantity} x ${item.price} ={" "}
+                                            <b>${item.quantity * item.price}</b>
                                         </p>
                                     </div>
                                 </div>
@@ -100,26 +100,26 @@ export default function ConfirmOrder() {
                         <p>
                             Subtotal:
                             <span className="order-summary-values">
-                                ₹{itemsPrice}
+                                ${itemsPrice}
                             </span>
                         </p>
                         <p>
                             Shipping:
                             <span className="order-summary-values">
-                                ₹{shippingPrice}
+                                ${shippingPrice}
                             </span>
                         </p>
                         <p>
                             Tax:
                             <span className="order-summary-values">
-                                ₹{taxPrice}
+                                ${taxPrice}
                             </span>
                         </p>
                         <hr />
                         <p>
                             Total:
                             <span className="order-summary-values">
-                                ₹{totalPrice}
+                                ${totalPrice}
                             </span>
                         </p>
                         <hr />

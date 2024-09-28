@@ -28,16 +28,16 @@ class APIFeatures {
         const removeFields = ["keyword", "limit", "page"];
         removeFields.forEach((field) => delete queryStrCopy[field]);
 
-        // Add ₹ before gt, gte, lt, lte
+        // Add $ before gt, gte, lt, lte
         let queryStr = JSON.stringify(queryStrCopy);
         queryStr = queryStr.replace(
             /\b(gt|gte|lt|lte)\b/g,
-            (match) => `₹${match}`
+            (match) => `$${match}`
         );
 
-        // Replace ₹ with $ just before executing the query
+        // Replace $ with $ just before executing the query
         queryStr = queryStr.replace(
-            /₹(gt|gte|lt|lte)\b/g,
+            /$(gt|gte|lt|lte)\b/g,
             (match, p1) => `$${p1}`
         );
         this.query.find(JSON.parse(queryStr));
