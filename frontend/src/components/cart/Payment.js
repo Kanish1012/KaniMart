@@ -17,13 +17,15 @@ export default function Payment() {
     const elements = useElements();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
     const { user } = useSelector((state) => state.authState);
     const { items: cartItems, shippingInfo } = useSelector(
         (state) => state.cartState
     );
+
+    const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
+
     const paymentData = {
-        amount: Math.round(orderInfo.totalPrice * 100),
+        amount: orderInfo ? Math.round(orderInfo.totalPrice * 100) : 0,
         shipping: {
             name: user.name,
             address: {
@@ -51,18 +53,19 @@ export default function Payment() {
 
     useEffect(() => {
         validateShipping(shippingInfo, navigate);
-    }, [shippingInfo, navigate]);
+    }, []);
 
     const submitHandler = async (e) => {
         e.preventDefault();
         document.querySelector("#pay_btn").disabled = true;
+
         try {
             const { data } = await axios.post(
                 "/api/v1/payment/process",
                 paymentData
             );
             const clientSecret = data.client_secret;
-            const result = stripe.confirmCardPayment(clientSecret, {
+            const result = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: {
                     card: elements.getElement(CardNumberElement),
                     billing_details: {
@@ -73,27 +76,35 @@ export default function Payment() {
             });
 
             if (result.error) {
-                toast((await result).error.message, {
+                toast(result.error.message, {
                     type: "error",
                     position: "bottom-center",
                 });
                 document.querySelector("#pay_btn").disabled = false;
             } else {
-                if ((await result).paymentIntent.status === "succeeded") {
+                if (result.paymentIntent.status === "succeeded") {
                     toast("Payment Success", {
                         type: "success",
                         position: "bottom-center",
                     });
-                    //dispatch(orderCompleted());
+
+                    dispatch(orderCompleted());
                     navigate("/order/success");
                 } else {
                     toast("Please try again", {
                         type: "error",
                         position: "bottom-center",
                     });
+                    document.querySelector("#pay_btn").disabled = false;
                 }
             }
-        } catch (error) {}
+        } catch (error) {
+            toast("Payment failed. Please try again.", {
+                type: "error",
+                position: "bottom-center",
+            });
+            document.querySelector("#pay_btn").disabled = false;
+        }
     };
 
     return (
@@ -134,7 +145,7 @@ export default function Payment() {
                         id="pay_btn"
                         className="btn btn-block py-3"
                     >
-                        Pay - {`$${orderInfo && orderInfo.totalPrice}`}
+                        Pay - {`$${orderInfo ? orderInfo.totalPrice : ""}`}
                     </button>
                 </form>
             </div>
