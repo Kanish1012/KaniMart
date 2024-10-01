@@ -11,6 +11,8 @@ import {
 import axios from "axios";
 import { toast } from "react-toastify";
 import { orderCompleted } from "../../slices/cartSlice";
+import { createOrder } from "../../actions/orderActions";
+import { clearError as clearOrderError } from "../../slices/orderSlice";
 
 export default function Payment() {
     const stripe = useStripe();
@@ -21,6 +23,7 @@ export default function Payment() {
     const { items: cartItems, shippingInfo } = useSelector(
         (state) => state.cartState
     );
+    const { error: orderError } = useSelector((state) => state.orderState);
 
     const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
 
@@ -53,6 +56,16 @@ export default function Payment() {
 
     useEffect(() => {
         validateShipping(shippingInfo, navigate);
+        if (orderError) {
+            toast(orderError, {
+                type: "error",
+                position: "bottom-center",
+                onOpen: () => {
+                    dispatch(clearOrderError());
+                },
+            });
+            return;
+        }
     }, []);
 
     const submitHandler = async (e) => {
@@ -87,8 +100,13 @@ export default function Payment() {
                         type: "success",
                         position: "bottom-center",
                     });
+                    order.paymentInfo = {
+                        id: result.paymentIntent.id,
+                        status: result.paymentIntent.status,
+                    };
 
                     dispatch(orderCompleted());
+                    dispatch(createOrder(order));
                     navigate("/order/success");
                 } else {
                     toast("Please try again", {
