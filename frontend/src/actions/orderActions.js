@@ -2,6 +2,9 @@ import {
     createOrderFail,
     createOrderRequest,
     createOrderSuccess,
+    orderDetailFail,
+    orderDetailRequest,
+    orderDetailSuccess,
     userOrderFail,
     userOrderRequest,
     userOrderSuccess,
@@ -25,5 +28,15 @@ export const userOrders = async (dispatch) => {
         dispatch(userOrderSuccess(data));
     } catch (error) {
         dispatch(userOrderFail(error.response.data.message));
+    }
+};
+
+export const orderDetail = (id) => async (dispatch) => {
+    try {
+        dispatch(orderDetailRequest());
+        const { data } = await axios.get(`/api/v1/order/${id}`);
+        dispatch(orderDetailSuccess(data));
+    } catch (error) {
+        dispatch(orderDetailFail(error.response.data.message));
     }
 };
