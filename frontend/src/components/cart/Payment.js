@@ -1,5 +1,5 @@
 import { useElements, useStripe } from "@stripe/react-stripe-js";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { validateShipping } from "../cart/Shipping";
@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { orderCompleted } from "../../slices/cartSlice";
 import { createOrder } from "../../actions/orderActions";
 import { clearError as clearOrderError } from "../../slices/orderSlice";
+import CheckoutSteps from "./CheckoutSteps";
 
 export default function Payment() {
     const stripe = useStripe();
@@ -126,47 +127,50 @@ export default function Payment() {
     };
 
     return (
-        <div className="row wrapper">
-            <div className="col-10 col-lg-5">
-                <form className="shadow-lg" onSubmit={submitHandler}>
-                    <h1 className="mb-4">Card Info</h1>
+        <Fragment>
+            <CheckoutSteps shipping confirmOrder payment />
+            <div className="row wrapper">
+                <div className="col-10 col-lg-5">
+                    <form className="shadow-lg" onSubmit={submitHandler}>
+                        <h1 className="mb-4">Card Info</h1>
 
-                    <div className="form-group">
-                        <label htmlFor="card_num_field">Card Number</label>
-                        <CardNumberElement
-                            type="text"
-                            id="card_num_field"
-                            className="form-control"
-                        />
-                    </div>
+                        <div className="form-group">
+                            <label htmlFor="card_num_field">Card Number</label>
+                            <CardNumberElement
+                                type="text"
+                                id="card_num_field"
+                                className="form-control"
+                            />
+                        </div>
 
-                    <div className="form-group">
-                        <label htmlFor="card_exp_field">Card Expiry</label>
-                        <CardExpiryElement
-                            type="text"
-                            id="card_exp_field"
-                            className="form-control"
-                        />
-                    </div>
+                        <div className="form-group">
+                            <label htmlFor="card_exp_field">Card Expiry</label>
+                            <CardExpiryElement
+                                type="text"
+                                id="card_exp_field"
+                                className="form-control"
+                            />
+                        </div>
 
-                    <div className="form-group">
-                        <label htmlFor="card_cvc_field">Card CVC</label>
-                        <CardCvcElement
-                            type="text"
-                            id="card_cvc_field"
-                            className="form-control"
-                        />
-                    </div>
+                        <div className="form-group">
+                            <label htmlFor="card_cvc_field">Card CVC</label>
+                            <CardCvcElement
+                                type="text"
+                                id="card_cvc_field"
+                                className="form-control"
+                            />
+                        </div>
 
-                    <button
-                        type="submit"
-                        id="pay_btn"
-                        className="btn btn-block py-3"
-                    >
-                        Pay - {`$${orderInfo ? orderInfo.totalPrice : ""}`}
-                    </button>
-                </form>
+                        <button
+                            type="submit"
+                            id="pay_btn"
+                            className="btn btn-block py-3"
+                        >
+                            Pay - {`$${orderInfo ? orderInfo.totalPrice : ""}`}
+                        </button>
+                    </form>
+                </div>
             </div>
-        </div>
+        </Fragment>
     );
 }
