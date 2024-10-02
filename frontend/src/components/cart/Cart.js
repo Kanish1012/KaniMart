@@ -44,7 +44,7 @@ export default function Cart() {
                     <div className="row d-flex justify-content-between">
                         <div className="col-12 col-lg-8">
                             {items.map((item) => (
-                                <Fragment>
+                                <Fragment key={item.product}>
                                     <hr />
                                     <div className="cart-item">
                                         <div className="row">
@@ -137,12 +137,14 @@ export default function Cart() {
                                     Est. total:
                                     <span className="order-summary-values">
                                         $
-                                        {items.reduce(
-                                            (acc, item) =>
-                                                acc +
-                                                item.quantity * item.price,
-                                            0
-                                        )}
+                                        {items
+                                            .reduce(
+                                                (acc, item) =>
+                                                    acc +
+                                                    item.quantity * item.price,
+                                                0
+                                            )
+                                            .toFixed(2)}
                                     </span>
                                 </p>
                                 <hr />
