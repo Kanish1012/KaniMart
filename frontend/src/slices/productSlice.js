@@ -47,6 +47,12 @@ const productSlice = createSlice({
                 error: action.payload,
             };
         },
+        clearReviewSubmitted(state, action) {
+            return {
+                ...state,
+                isReviewSubmitted: false,
+            };
+        },
         clearError(state, action) {
             return {
                 ...state,
@@ -65,6 +71,7 @@ export const {
     createReviewRequest,
     createReviewSuccess,
     createReviewFail,
+    clearReviewSubmitted,
     clearError,
 } = actions;
 

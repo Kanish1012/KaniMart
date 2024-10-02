@@ -1,15 +1,23 @@
 import { Fragment, useEffect, useState } from "react";
-import { getProduct } from "../../actions/productActions";
+import { createReview, getProduct } from "../../actions/productActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import Loader from "../layouts/Loader";
 import { Carousel } from "react-bootstrap";
 import MetaData from "../layouts/MetaData";
 import { addCartItem } from "../../actions/cartActions";
+import { clearReviewSubmitted, clearError } from "../../slices/productSlice";
+import { Modal } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 export default function ProductDetail() {
-    const { loading, product } = useSelector((state) => state.productState);
-
+    const {
+        loading,
+        product = {},
+        isReviewSubmitted,
+        error,
+    } = useSelector((state) => state.productState);
+    const { user } = useSelector((state) => state.authState);
     const dispatch = useDispatch();
     const { id } = useParams();
     const [quantity, setQuantity] = useState(1);
@@ -32,9 +40,49 @@ export default function ProductDetail() {
         setQuantity(qty);
     };
 
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const [rating, setRating] = useState(1);
+
+    const [comment, setComment] = useState("");
+
+    const reviewHandler = () => {
+        const formData = new FormData();
+        formData.append("rating", rating);
+        formData.append("comment", comment);
+        formData.append("productId", id);
+        dispatch(createReview(formData));
+    };
+
     useEffect(() => {
+        if (isReviewSubmitted) {
+            handleClose();
+            toast("Review Submitted successfully", {
+                type: "success",
+                position: "bottom-center",
+                onOpen: () => dispatch(clearReviewSubmitted()),
+            });
+            return;
+        }
+        if (error) {
+            toast(error, {
+                position: "bottom-center",
+                type: `error`,
+                onOpen: () => {
+                    dispatch(clearError());
+                },
+            });
+            return;
+        }
+        if (!product._id || isReviewSubmitted) {
+            dispatch(getProduct(id));
+        }
+
         dispatch(getProduct(id));
-    }, [dispatch, id]);
+    }, [dispatch, id, isReviewSubmitted, error]);
 
     return (
         <Fragment>
@@ -149,84 +197,77 @@ export default function ProductDetail() {
                             <p id="product_seller mb-3">
                                 Sold by: <strong>{product.seller}</strong>
                             </p>
-                            <button
-                                id="review_btn"
-                                type="button"
-                                className="btn btn-success mt-4"
-                            >
-                                Submit Your Review
-                            </button>
+                            {user ? (
+                                <button
+                                    id="review_btn"
+                                    type="button"
+                                    className="btn btn-success mt-4"
+                                    onClick={handleShow}
+                                >
+                                    Submit Your Review
+                                </button>
+                            ) : (
+                                <div className="alert alert-danger mt-5">
+                                    Login to Post Review
+                                </div>
+                            )}
 
-                            {/* need to make changes */}
                             <div className="row mt-2 mb-5">
                                 <div className="rating w-50">
-                                    <div
-                                        className="modal fade"
-                                        id="ratingModal"
-                                        tabIndex="-1"
-                                    >
-                                        <div
-                                            className="modal-dialog"
-                                            role="document"
-                                        >
-                                            <div className="modal-content">
-                                                <div className="modal-header">
-                                                    <h5
-                                                        className="modal-title"
-                                                        id=""
+                                    <Modal show={show} onHide={handleClose}>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>
+                                                Submit Review
+                                            </Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body>
+                                            <ul className="stars">
+                                                {[1, 2, 3, 4, 5].map((star) => (
+                                                    <li
+                                                        value={star}
+                                                        onClick={() =>
+                                                            setRating(star)
+                                                        }
+                                                        className={`star ${
+                                                            star <= rating
+                                                                ? "orange"
+                                                                : ""
+                                                        }`}
+                                                        onMouseOver={(e) => {
+                                                            e.target.classList.add(
+                                                                "yellow"
+                                                            );
+                                                        }}
+                                                        onMouseOut={(e) => {
+                                                            e.target.classList.remove(
+                                                                "yellow"
+                                                            );
+                                                        }}
                                                     >
-                                                        Hi
-                                                    </h5>
-                                                    <button className="close">
-                                                        <span>&items;</span>
-                                                    </button>
-                                                </div>
-                                                <div className="modal-body">
-                                                    <ul className="stars">
-                                                        <li className="star">
-                                                            i.fa{" "}
-                                                            <i
-                                                                class="fa fa-hourglass-start"
-                                                                aria-hidden="true"
-                                                            ></i>
-                                                        </li>
-                                                        <li className="star">
-                                                            i.fa{" "}
-                                                            <i
-                                                                class="fa fa-hourglass-start"
-                                                                aria-hidden="true"
-                                                            ></i>
-                                                        </li>
-                                                        <li className="star">
-                                                            i.fa{" "}
-                                                            <i
-                                                                class="fa fa-hourglass-start"
-                                                                aria-hidden="true"
-                                                            ></i>
-                                                        </li>
-                                                        <li className="star">
-                                                            i.fa{" "}
-                                                            <i
-                                                                class="fa fa-hourglass-start"
-                                                                aria-hidden="true"
-                                                            ></i>
-                                                        </li>
-                                                        <li className="star">
-                                                            i.fa{" "}
-                                                            <i
-                                                                class="fa fa-hourglass-start"
-                                                                aria-hidden="true"
-                                                            ></i>
-                                                        </li>
-                                                    </ul>
-                                                    <textarea
-                                                        name="review"
-                                                        id="review"
-                                                    ></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                                        <i className="fa fa-star"></i>
+                                                    </li>
+                                                ))}
+                                            </ul>
+
+                                            <textarea
+                                                onChange={(e) =>
+                                                    setComment(e.target.value)
+                                                }
+                                                name="review"
+                                                id="review"
+                                                className="form-control mt-3"
+                                            ></textarea>
+
+                                            <button
+                                                disabled={loading}
+                                                aria-label="Close"
+                                                className="btn my-3 float-right review-btn px-4 text-white"
+                                                onClick={reviewHandler}
+                                            >
+                                                Submit
+                                            </button>
+                                        </Modal.Body>
+                                    </Modal>
                                 </div>
                             </div>
                         </div>
