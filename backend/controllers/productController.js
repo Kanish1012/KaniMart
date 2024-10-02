@@ -42,7 +42,10 @@ exports.getProducts = catchAsyncErrors(async (req, res, next) => {
 
 //Get Single Product - /api/v1/product/:id
 exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate(
+        "reviews.user",
+        "name email"
+    );
 
     if (!product) {
         return next(new ErrorHandler("Product not found", 400));

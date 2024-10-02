@@ -6,9 +6,14 @@ import Loader from "../layouts/Loader";
 import { Carousel } from "react-bootstrap";
 import MetaData from "../layouts/MetaData";
 import { addCartItem } from "../../actions/cartActions";
-import { clearReviewSubmitted, clearError } from "../../slices/productSlice";
+import {
+    clearReviewSubmitted,
+    clearError,
+    clearProduct,
+} from "../../slices/productSlice";
 import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
+import ProductReview from "./ProductReview";
 
 export default function ProductDetail() {
     const {
@@ -65,7 +70,6 @@ export default function ProductDetail() {
                 position: "bottom-center",
                 onOpen: () => dispatch(clearReviewSubmitted()),
             });
-            return;
         }
         if (error) {
             toast(error, {
@@ -80,6 +84,10 @@ export default function ProductDetail() {
         if (!product._id || isReviewSubmitted) {
             dispatch(getProduct(id));
         }
+
+        return () => {
+            dispatch(clearProduct());
+        };
 
         dispatch(getProduct(id));
     }, [dispatch, id, isReviewSubmitted, error]);
@@ -272,6 +280,9 @@ export default function ProductDetail() {
                             </div>
                         </div>
                     </div>
+                    {product.reviews && product.reviews.length > 0 ? (
+                        <ProductReview reviews={product.reviews} />
+                    ) : null}
                 </Fragment>
             )}
         </Fragment>
