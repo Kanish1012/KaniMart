@@ -3,8 +3,16 @@ const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncError");
 const APIFeatures = require("../utils/apiFeatures");
 
-//Create Product - /api/v1/admin/products/new
+//Create Product - /api/v1/admin/product/new
 exports.newProduct = catchAsyncErrors(async (req, res, next) => {
+    let images = [];
+    if (req.files.length > 0) {
+        req.files.forEach((file) => {
+            let url = `${process.env.BACKEND_URL}/uploads//product/${file.originalname}`;
+            images.push({ image: url });
+        });
+    }
+    req.body.images = images;
     //Adding user id
     req.body.user = req.user.id;
 

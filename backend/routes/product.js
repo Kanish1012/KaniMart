@@ -15,6 +15,19 @@ const {
     isAuthenticatedUser,
     authorizeRoles,
 } = require("../middlewares/authenticate");
+const multer = require("multer");
+const path = require("path");
+
+const upload = multer({
+    storage: multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, path.join(__dirname, "..", "uploads/product"));
+        },
+        filename: function (req, file, cb) {
+            cb(null, file.originalname);
+        },
+    }),
+});
 
 router.route("/products").get(getProducts);
 router
@@ -30,8 +43,13 @@ router.route("/reviews").get(isAuthenticatedUser, getReviews);
 
 //Admin
 router
-    .route("/admin/products/new")
-    .post(isAuthenticatedUser, authorizeRoles("admin"), newProduct);
+    .route("/admin/product/new")
+    .post(
+        isAuthenticatedUser,
+        authorizeRoles("admin"),
+        upload.array("images"),
+        newProduct
+    );
 
 router
     .route("/admin/products")
