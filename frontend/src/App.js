@@ -152,9 +152,16 @@ function App() {
                         </Routes>
                     </div>
 
-                    {/*Admin route*/}            
+                    {/*Admin route*/}
                     <Routes>
-                        <Route path="/admin/dashboard" element={<Dashboard/>} />
+                        <Route
+                            path="/admin/dashboard"
+                            element={
+                                <ProtectedRoute isAdmin={true}>
+                                    <Dashboard />
+                                </ProtectedRoute>
+                            }
+                        />
                     </Routes>
                     <Footer />
                 </HelmetProvider>
