@@ -29,6 +29,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import OrderSuccess from "./components/cart/OrderSuccess";
 import UserOrders from "./components/order/UserOrders";
 import OrderDetail from "./components/order/OrderDetail";
+import Dashboard from "./components/admin/Dashboard";
 
 function App() {
     const [stripeApiKey, setStripeApiKey] = useState("");
@@ -150,6 +151,11 @@ function App() {
                             />
                         </Routes>
                     </div>
+
+                    {/*Admin route*/}            
+                    <Routes>
+                        <Route path="/admin/dashboard" element={<Dashboard/>} />
+                    </Routes>
                     <Footer />
                 </HelmetProvider>
             </div>

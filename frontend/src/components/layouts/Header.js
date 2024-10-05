@@ -47,6 +47,17 @@ export default function Header() {
                             <span>{user.name}</span>
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
+                            {user.role === "admin" && (
+                                <Dropdown.Item
+                                    onClick={() => {
+                                        navigate("admin/dashboard");
+                                    }}
+                                    className="text-dark"
+                                >
+                                    Dashboard
+                                </Dropdown.Item>
+                            )}
+
                             <Dropdown.Item
                                 onClick={() => {
                                     navigate("/myprofile");
