@@ -11,6 +11,9 @@ import {
     createReviewFail,
     createReviewRequest,
     createReviewSuccess,
+    deleteProductFail,
+    deleteProductRequest,
+    deleteProductSuccess,
     newProductFail,
     newProductRequest,
     newProductSuccess,
@@ -89,5 +92,15 @@ export const createNewProduct = (productData) => async (dispatch) => {
         dispatch(newProductSuccess(data));
     } catch (error) {
         dispatch(newProductFail(error.response.data.message));
+    }
+};
+
+export const deleteProduct = (id) => async (dispatch) => {
+    try {
+        dispatch(deleteProductRequest());
+        const { data } = await axios.delete(`/api/v1/admin/product/${id}`);
+        dispatch(deleteProductSuccess(data));
+    } catch (error) {
+        dispatch(deleteProductFail(error.response.data.message));
     }
 };
