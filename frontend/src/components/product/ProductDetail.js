@@ -169,9 +169,15 @@ export default function ProductDetail() {
                                 type="button"
                                 id="cart_btn"
                                 className="btn btn-success d-inline ml-4"
-                                onClick={() =>
-                                    dispatch(addCartItem(product._id, quantity))
-                                }
+                                onClick={() => {
+                                    dispatch(
+                                        addCartItem(product._id, quantity)
+                                    );
+                                    toast("Cart Item Added successfully", {
+                                        type: "success",
+                                        position: "bottom-center",
+                                    });
+                                }}
                                 disabled={product.stock == 0 ? true : false}
                             >
                                 Add to Cart
