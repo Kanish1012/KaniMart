@@ -69,6 +69,22 @@ exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
 exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
     let product = await Product.findById(req.params.id);
 
+    //Uploading Images
+    let images = [];
+
+    //if images not cleared we keep existing images
+    if (req.body.imagesCleared === "false") {
+        images = product.images;
+    }
+
+    if (req.files.length > 0) {
+        req.files.forEach((file) => {
+            let url = `${process.env.BACKEND_URL}/uploads//product/${file.originalname}`;
+            images.push({ image: url });
+        });
+    }
+    req.body.images = images;
+
     if (!product) {
         return res.status(404).json({
             success: false,
