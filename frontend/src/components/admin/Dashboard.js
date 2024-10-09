@@ -3,9 +3,13 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAdminProducts } from "../../actions/productActions";
+import { getUsers } from "../../actions/userActions";
+import { adminOrders as adminOrdersAction } from "../../actions/orderActions";
 
 export default function Dashboard() {
     const { products = [] } = useSelector((state) => state.productsState);
+    const { adminOrders = [] } = useSelector((state) => state.orderState);
+    const { users = [] } = useSelector((state) => state.userState);
     const dispatch = useDispatch();
     let outOfStock = 0;
 
@@ -17,8 +21,17 @@ export default function Dashboard() {
         });
     }
 
+    let totalAmount = 0;
+    if (adminOrders.length > 0) {
+        adminOrders.forEach((order) => {
+            totalAmount += order.totalPrice;
+        });
+    }   
+
     useEffect(() => {
         dispatch(getAdminProducts);
+        dispatch(getUsers);
+        dispatch(adminOrdersAction);
     }, []);
 
     return (
@@ -34,7 +47,7 @@ export default function Dashboard() {
                             <div className="card-body">
                                 <div className="text-center card-font-size">
                                     Total Amount
-                                    <br /> <b>${}</b>
+                                    <br /> <b>${totalAmount}</b>
                                 </div>
                             </div>
                         </div>
@@ -66,7 +79,7 @@ export default function Dashboard() {
                             <div className="card-body">
                                 <div className="text-center card-font-size">
                                     Orders
-                                    <br /> <b>{}</b>
+                                    <br /> <b>{adminOrders.length}</b>
                                 </div>
                             </div>
                             <Link
@@ -86,7 +99,7 @@ export default function Dashboard() {
                             <div className="card-body">
                                 <div className="text-center card-font-size">
                                     Users
-                                    <br /> <b>{}</b>
+                                    <br /> <b>{users.length}</b>
                                 </div>
                             </div>
                             <Link
