@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import {
     orderDetail as orderDetailAction,
     updateOrder,
@@ -24,8 +24,6 @@ export default function UpdateOrder() {
     const isPaid = paymentInfo.status === "succeeded" ? true : false;
     const [orderStatus, setOrderStatus] = useState("Processing");
     const { id: orderId } = useParams();
-
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const submitHandler = (e) => {

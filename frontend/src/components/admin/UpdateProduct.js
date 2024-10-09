@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react";
 import Sidebar from "./Sidebar";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getProduct, updateProduct } from "../../actions/productActions";
 import { clearError, clearProductUpdated } from "../../slices/productSlice";
 import { toast } from "react-toastify";
@@ -37,7 +37,6 @@ export default function UpdateProduct() {
         "Home",
     ];
 
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const onImagesChange = (e) => {
@@ -253,7 +252,7 @@ export default function UpdateProduct() {
                                         className="mt-3 mr-2"
                                         key={image}
                                         src={image}
-                                        alt={`Image Preview`}
+                                        alt=""
                                         width="55"
                                         height="52"
                                     />

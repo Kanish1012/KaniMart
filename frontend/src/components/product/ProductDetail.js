@@ -29,7 +29,7 @@ export default function ProductDetail() {
 
     const increaseQuantity = () => {
         const count = document.querySelector(".count");
-        if (product.stock == 0 || count.valueAsNumber >= product.stock) {
+        if (product.stock === 0 || count.valueAsNumber >= product.stock) {
             return;
         }
         const qty = count.valueAsNumber + 1;
@@ -38,7 +38,7 @@ export default function ProductDetail() {
 
     const decreaseQuantity = () => {
         const count = document.querySelector(".count");
-        if (count.valueAsNumber == 1) {
+        if (count.valueAsNumber === 1) {
             return;
         }
         const qty = count.valueAsNumber - 1;
@@ -81,6 +81,7 @@ export default function ProductDetail() {
             });
             return;
         }
+        dispatch(getProduct(id));
         if (!product._id || isReviewSubmitted) {
             dispatch(getProduct(id));
         }
@@ -88,8 +89,6 @@ export default function ProductDetail() {
         return () => {
             dispatch(clearProduct());
         };
-
-        dispatch(getProduct(id));
     }, [dispatch, id, isReviewSubmitted, error]);
 
     return (
@@ -178,7 +177,7 @@ export default function ProductDetail() {
                                         position: "bottom-center",
                                     });
                                 }}
-                                disabled={product.stock == 0 ? true : false}
+                                disabled={product.stock === 0 ? true : false}
                             >
                                 Add to Cart
                             </button>

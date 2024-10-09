@@ -6,9 +6,13 @@ const APIFeatures = require("../utils/apiFeatures");
 //Create Product - /api/v1/admin/product/new
 exports.newProduct = catchAsyncErrors(async (req, res, next) => {
     let images = [];
+    let BASE_URL = process.env.BACKEND_URL;
+    if (process.env.NODE_ENV === "production") {
+        BASE_URL = `${req.protocol}://${req.get("host")}`;
+    }
     if (req.files.length > 0) {
         req.files.forEach((file) => {
-            let url = `${process.env.BACKEND_URL}/uploads//product/${file.originalname}`;
+            let url = `${BASE_URL}/uploads//product/${file.originalname}`;
             images.push({ image: url });
         });
     }
@@ -68,7 +72,10 @@ exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
 //Update Product - /api/v1/product/:id
 exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
     let product = await Product.findById(req.params.id);
-
+    let BASE_URL = process.env.BACKEND_URL;
+    if (process.env.NODE_ENV === "production") {
+        BASE_URL = `${req.protocol}://${req.get("host")}`;
+    }
     //Uploading Images
     let images = [];
 
@@ -79,7 +86,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
 
     if (req.files.length > 0) {
         req.files.forEach((file) => {
-            let url = `${process.env.BACKEND_URL}/uploads//product/${file.originalname}`;
+            let url = `${BASE_URL}/uploads//product/${file.originalname}`;
             images.push({ image: url });
         });
     }
