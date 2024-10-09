@@ -23,6 +23,12 @@ import {
     updateProductRequest,
     updateProductSuccess,
     updateProductFail,
+    reviewsRequest,
+    reviewsSuccess,
+    reviewsFail,
+    deleteReviewRequest,
+    deleteReviewSuccess,
+    deleteReviewFail,
 } from "../slices/productSlice";
 
 export const getProducts =
@@ -118,5 +124,30 @@ export const updateProduct = (id, productData) => async (dispatch) => {
         dispatch(updateProductSuccess(data));
     } catch (error) {
         dispatch(updateProductFail(error.response.data.message));
+    }
+};
+
+export const getReviews = (id) => async (dispatch) => {
+    try {
+        dispatch(reviewsRequest());
+
+        const { data } = await axios.get(`/api/v1/admin/reviews`, {
+            params: { id },
+        });
+        dispatch(reviewsSuccess(data));
+    } catch (error) {
+        dispatch(reviewsFail(error.response.data.message));
+    }
+};
+
+export const deleteReview = (productId, id) => async (dispatch) => {
+    try {
+        dispatch(deleteReviewRequest());
+        await axios.delete(`/api/v1/admin/review`, {
+            params: { productId, id },
+        });
+        dispatch(deleteReviewSuccess());
+    } catch (error) {
+        dispatch(deleteReviewFail(error.response.data.message));
     }
 };

@@ -9,6 +9,8 @@ const productSlice = createSlice({
         isProductCreated: false,
         isProductDeleted: false,
         isProductUpdated: false,
+        isReviewDeleted: false,
+        reviews: [],
     },
     reducers: {
         productRequest(state, action) {
@@ -150,6 +152,52 @@ const productSlice = createSlice({
                 isProductUpdated: false,
             };
         },
+        reviewsRequest(state, action) {
+            return {
+                ...state,
+                loading: true,
+            };
+        },
+        reviewsSuccess(state, action) {
+            return {
+                ...state,
+                loading: false,
+                reviews: action.payload.reviews,
+            };
+        },
+        reviewsFail(state, action) {
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+        },
+        deleteReviewRequest(state, action) {
+            return {
+                ...state,
+                loading: true,
+            };
+        },
+        deleteReviewSuccess(state, action) {
+            return {
+                ...state,
+                loading: false,
+                isReviewDeleted: true,
+            };
+        },
+        deleteReviewFail(state, action) {
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+        },
+        clearReviewDeleted(state, action) {
+            return {
+                ...state,
+                isReviewDeleted: false,
+            };
+        },
     },
 });
 
@@ -165,9 +213,9 @@ export const {
     clearReviewSubmitted,
     clearError,
     clearProduct,
-    newProductFail,
     newProductRequest,
     newProductSuccess,
+    newProductFail,
     clearProductCreated,
     deleteProductRequest,
     deleteProductSuccess,
@@ -177,6 +225,13 @@ export const {
     updateProductSuccess,
     updateProductFail,
     clearProductUpdated,
+    reviewsRequest,
+    reviewsSuccess,
+    reviewsFail,
+    deleteReviewRequest,
+    deleteReviewSuccess,
+    deleteReviewFail,
+    clearReviewDeleted,
 } = actions;
 
 export default reducer;
