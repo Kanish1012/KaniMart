@@ -21,6 +21,8 @@ This website will focus both on the site's user experience and security. Feature
 
 Create a config.env file in backend/config folder
 Use MongoDB, the schemas are predefined.
+Run this in terminal in both root directory and in frontend folder:
+npm install 
 
 Add these in config.env:
 
